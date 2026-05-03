@@ -30,12 +30,12 @@ if __name__ == '__main__':
         # File searching and processing logic goes here
         for path in args.paths:
             if S_ISDIR(sftp.stat(path).st_mode):
-                logging.INFO: f'Processing directory: {path}'
+                logging.INFO(f'Processing directory: {path}')
                 for dirpath, dirnames, filenames in sftp.walk(path):
                     for filename in filenames:
                         if filename.endswith(tuple(args.extensions)):
                             file_path = os.path.join(dirpath, filename)
-                            logging.INFO: f'Found file: {file_path}'
+                            logging.INFO(f'Found file: {file_path}')
                             # Read file in chunks
                             with sftp.open(file_path, 'rb') as remote_file:
                                 while True:
@@ -45,7 +45,7 @@ if __name__ == '__main__':
                                     # Process chunk
                             
             else:
-                logging.WARN: f'Path is not a directory: {path}'
+                logging.WARN(f'Path is not a directory: {path}')
 
     except Exception as e:
         logging.ERROR(f'Error during processing: {e}')
